@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"unicode"
 )
 
 // 这里定义列表展示时使用的视图结构。
@@ -73,4 +74,41 @@ func ValidatePriority(priority int) error {
 		return fmt.Errorf(i18n.T(i18n.ErrPriorityNonNegative))
 	}
 	return nil
+}
+
+func DisplayWidth(text string) int {
+	// 按终端里的可见宽度计算，中文字符按双宽处理。
+	width := 0
+	for _, r := range text {
+		switch {
+		case r == '\n' || r == '\r' || r == '\t':
+			continue
+		case unicode.Is(unicode.Mn, r):
+			continue
+		case r >= 0x1100 && (r <= 0x115f ||
+			r == 0x2329 ||
+			r == 0x232a ||
+			(r >= 0x2e80 && r <= 0xa4cf && r != 0x303f) ||
+			(r >= 0xac00 && r <= 0xd7a3) ||
+			(r >= 0xf900 && r <= 0xfaff) ||
+			(r >= 0xfe10 && r <= 0xfe19) ||
+			(r >= 0xfe30 && r <= 0xfe6f) ||
+			(r >= 0xff00 && r <= 0xff60) ||
+			(r >= 0xffe0 && r <= 0xffe6) ||
+			(r >= 0x20000 && r <= 0x3fffd)):
+			width += 2
+		default:
+			width++
+		}
+	}
+	return width
+}
+
+func PadRightDisplay(text string, width int) string {
+	// 先按显示宽度算差值，再补空格让列宽一致。
+	padding := width - DisplayWidth(text)
+	if padding <= 0 {
+		return text
+	}
+	return text + strings.Repeat(" ", padding)
 }

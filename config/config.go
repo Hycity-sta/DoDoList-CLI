@@ -56,12 +56,7 @@ func Language() string {
 }
 
 func ConfigPath() (string, error) {
-	// 优先使用当前工作目录，方便开发和直接运行时持久化配置。
-	if cwd, err := os.Getwd(); err == nil {
-		return filepath.Join(cwd, "config.json"), nil
-	}
-
-	// 如果拿不到工作目录，再退回到可执行文件所在目录。
+	// 配置文件固定放在可执行文件同级目录。
 	exe, err := os.Executable()
 	if err != nil {
 		return "", err
