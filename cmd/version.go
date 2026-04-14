@@ -13,12 +13,12 @@ func Version() *cobra.Command {
 	command := &cobra.Command{
 		Use:   "version",
 		Short: "Print version information.",
-		Run:   VersionHandle,
+		Run:   versionHandle,
 	}
 	return command
 }
 
-func VersionHandle(cmd *cobra.Command, args []string) {
+func versionHandle(cmd *cobra.Command, args []string) {
 	// 版本命令只输出当前程序版本。
 	fmt.Printf("dodolist %s\n", version)
 }

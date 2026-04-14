@@ -15,12 +15,12 @@ func Ok() *cobra.Command {
 		Args:  cobra.ExactArgs(1),
 	}
 
-	// 这里把命令逻辑挂到 RunE 上。
-	command.RunE = okRunE
+	// 这里把命令逻辑挂到 Handle 上。
+	command.RunE = okHandle
 	return command
 }
 
-func okRunE(cmd *cobra.Command, args []string) error {
+func okHandle(cmd *cobra.Command, args []string) error {
 	// 先把命令行索引转换成内部切片下标。
 	index, err := utils.ParseIndex(args[0])
 	if err != nil {

@@ -11,11 +11,11 @@ func Help() *cobra.Command {
 	}
 
 	// 这里把帮助命令的执行逻辑挂上去。
-	command.RunE = helpRunE
+	command.RunE = helpHandle
 	return command
 }
 
-func helpRunE(cmd *cobra.Command, args []string) error {
+func helpHandle(cmd *cobra.Command, args []string) error {
 	// 直接复用根命令自带的帮助输出。
 	return cmd.Root().Help()
 }

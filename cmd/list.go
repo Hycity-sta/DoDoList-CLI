@@ -32,12 +32,12 @@ func List() *cobra.Command {
 	_ = command.Flags().MarkHidden("pro-filter")
 
 	// 这里分别挂上预处理逻辑和真正的执行逻辑。
-	command.RunE = listRunE(&priority, &filterByPriority, &sortByPriority, &sortByStatus)
-	command.PreRunE = listPreRunE(&priority, &filterByPriority)
+	command.RunE = listHandle(&priority, &filterByPriority, &sortByPriority, &sortByStatus)
+	command.PreRunE = listPreHandle(&priority, &filterByPriority)
 	return command
 }
 
-func listRunE(priority *int, filterByPriority *bool, sortByPriority *bool, sortByStatus *bool) func(cmd *cobra.Command, args []string) error {
+func listHandle(priority *int, filterByPriority *bool, sortByPriority *bool, sortByStatus *bool) func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
 		// 先读出当前所有待办，后续筛选和排序都基于这份数据。
 		store := utils.CurrentStore()
@@ -95,7 +95,7 @@ func listRunE(priority *int, filterByPriority *bool, sortByPriority *bool, sortB
 	}
 }
 
-func listPreRunE(priority *int, filterByPriority *bool) func(cmd *cobra.Command, args []string) error {
+func listPreHandle(priority *int, filterByPriority *bool) func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
 		// 先根据是否传入 --pro 自动决定要不要开启优先级过滤。
 		if cmd.Flags().Changed("pro") {

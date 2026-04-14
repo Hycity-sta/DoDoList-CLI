@@ -16,11 +16,11 @@ func Delete() *cobra.Command {
 	}
 
 	// 这里把删除逻辑挂到命令对象上。
-	command.RunE = deleteRunE
+	command.RunE = deleteHandle
 	return command
 }
 
-func deleteRunE(cmd *cobra.Command, args []string) error {
+func deleteHandle(cmd *cobra.Command, args []string) error {
 	// 先把命令行索引转换成内部切片下标。
 	index, err := utils.ParseIndex(args[0])
 	if err != nil {

@@ -20,12 +20,12 @@ func Edit() *cobra.Command {
 
 	// 这里注册编辑命令的参数和执行流程。
 	command.Flags().IntVar(&priority, "pro", 0, "new priority of the todo item")
-	command.RunE = editRunE(&priority, &changePriority)
-	command.PreRunE = editPreRunE(&changePriority)
+	command.RunE = editHandle(&priority, &changePriority)
+	command.PreRunE = editPreHandle(&changePriority)
 	return command
 }
 
-func editRunE(priority *int, changePriority *bool) func(cmd *cobra.Command, args []string) error {
+func editHandle(priority *int, changePriority *bool) func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
 		// 先把命令行索引转换成内部切片下标。
 		index, err := utils.ParseIndex(args[0])
@@ -68,7 +68,7 @@ func editRunE(priority *int, changePriority *bool) func(cmd *cobra.Command, args
 	}
 }
 
-func editPreRunE(changePriority *bool) func(cmd *cobra.Command, args []string) error {
+func editPreHandle(changePriority *bool) func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
 		// 根据是否传入 --pro 决定这次是否需要修改优先级。
 		*changePriority = cmd.Flags().Changed("pro")

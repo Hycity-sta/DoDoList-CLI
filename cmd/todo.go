@@ -21,11 +21,11 @@ func Todo() *cobra.Command {
 
 	// 这里挂载命令所需的标记和执行入口。
 	command.Flags().IntVar(&priority, "pro", 0, "priority of the todo item")
-	command.RunE = todoRunE(&priority)
+	command.RunE = todoHandle(&priority)
 	return command
 }
 
-func todoRunE(priority *int) func(cmd *cobra.Command, args []string) error {
+func todoHandle(priority *int) func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
 		// 先校验优先级，避免把非法值写进存储。
 		if err := utils.ValidatePriority(*priority); err != nil {
