@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"dodolist/i18n"
 	"dodolist/utils"
 	"fmt"
 	"sort"
@@ -17,16 +18,16 @@ func List() *cobra.Command {
 
 	// 这里定义列表命令本身的基本信息。
 	command := &cobra.Command{
-		Use:   "list",
-		Short: "List todo items.",
+		Use:   i18n.T(i18n.CmdListUse),
+		Short: i18n.T(i18n.CmdListShort),
 		Args:  cobra.NoArgs,
 	}
 
 	// 这里集中注册列表相关的筛选和排序参数。
-	command.Flags().IntVar(&priority, "pro", 0, "filter todos by priority")
-	command.Flags().BoolVar(&filterByPriority, "pro-filter", false, "enable priority filtering")
-	command.Flags().BoolVar(&sortByPriority, "sort", false, "sort by priority descending")
-	command.Flags().BoolVar(&sortByStatus, "status-sort", false, "sort by completion status")
+	command.Flags().IntVar(&priority, "pro", 0, i18n.T(i18n.CmdListPriority))
+	command.Flags().BoolVar(&filterByPriority, "pro-filter", false, i18n.T(i18n.CmdListProFilter))
+	command.Flags().BoolVar(&sortByPriority, "sort", false, i18n.T(i18n.CmdListSort))
+	command.Flags().BoolVar(&sortByStatus, "status-sort", false, i18n.T(i18n.CmdListStatusSort))
 
 	// 这个隐藏开关只作为内部状态承载，真实触发条件仍然是 --pro。
 	_ = command.Flags().MarkHidden("pro-filter")
@@ -87,7 +88,13 @@ func listHandle(priority *int, filterByPriority *bool, sortByPriority *bool, sor
 		// 最后把处理后的数据按表格形式输出到终端。
 		// 用制表写出整齐表格，终端里更容易看。
 		writer := tabwriter.NewWriter(cmd.OutOrStdout(), 0, 0, 2, ' ', 0)
-		fmt.Fprintln(writer, "INDEX\tCREATED AT\tPRIORITY\tSTATUS\tTODO")
+		fmt.Fprintf(writer, "%s\t%s\t%s\t%s\t%s\n",
+			i18n.T(i18n.CmdListHeaderIndex),
+			i18n.T(i18n.CmdListHeaderCreatedAt),
+			i18n.T(i18n.CmdListHeaderPriority),
+			i18n.T(i18n.CmdListHeaderStatus),
+			i18n.T(i18n.CmdListHeaderTodo),
+		)
 		for _, item := range filtered {
 			fmt.Fprintf(writer, "%d\t%s\t%d\t%s\t%s\n", item.Index, utils.FormatTime(item.CreatedAt), item.Priority, utils.FormatStatus(item.Completed), item.Content)
 		}

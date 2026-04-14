@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"dodolist/i18n"
 	"dodolist/utils"
 	"fmt"
 
@@ -13,13 +14,13 @@ func Edit() *cobra.Command {
 
 	// 这里定义编辑命令本身的基本信息。
 	command := &cobra.Command{
-		Use:   "edit [index] [content]",
-		Short: "Edit a todo item.",
+		Use:   i18n.T(i18n.CmdEditUse),
+		Short: i18n.T(i18n.CmdEditShort),
 		Args:  cobra.MinimumNArgs(2),
 	}
 
 	// 这里注册编辑命令的参数和执行流程。
-	command.Flags().IntVar(&priority, "pro", 0, "new priority of the todo item")
+	command.Flags().IntVar(&priority, "pro", 0, i18n.T(i18n.CmdEditPriority))
 	command.RunE = editHandle(&priority, &changePriority)
 	command.PreRunE = editPreHandle(&changePriority)
 	return command
@@ -47,7 +48,7 @@ func editHandle(priority *int, changePriority *bool) func(cmd *cobra.Command, ar
 			return err
 		}
 		if index >= len(records) {
-			return fmt.Errorf("todo %d does not exist", index+1)
+			return fmt.Errorf(i18n.T(i18n.ErrTodoNotExist, index+1))
 		}
 
 		// 这里按输入更新待办内容和可选的优先级。
@@ -63,7 +64,7 @@ func editHandle(priority *int, changePriority *bool) func(cmd *cobra.Command, ar
 		}
 
 		// 最后输出编辑成功提示。
-		fmt.Fprintf(cmd.OutOrStdout(), "edited todo %d\n", index+1)
+		fmt.Fprintf(cmd.OutOrStdout(), "%s\n", i18n.T(i18n.OutputEditedTodo, index+1))
 		return nil
 	}
 }

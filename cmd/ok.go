@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"dodolist/i18n"
 	"dodolist/utils"
 	"fmt"
 
@@ -10,8 +11,8 @@ import (
 func Ok() *cobra.Command {
 	// 这里定义“完成待办”命令的基本信息。
 	command := &cobra.Command{
-		Use:   "ok [index]",
-		Short: "Mark a todo item as completed.",
+		Use:   i18n.T(i18n.CmdOkUse),
+		Short: i18n.T(i18n.CmdOkShort),
 		Args:  cobra.ExactArgs(1),
 	}
 
@@ -34,7 +35,7 @@ func okHandle(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	if index >= len(records) {
-		return fmt.Errorf("todo %d does not exist", index+1)
+		return fmt.Errorf(i18n.T(i18n.ErrTodoNotExist, index+1))
 	}
 
 	// 把目标待办标记为已完成。
@@ -44,6 +45,6 @@ func okHandle(cmd *cobra.Command, args []string) error {
 	}
 
 	// 最后输出完成提示。
-	fmt.Fprintf(cmd.OutOrStdout(), "completed todo %d\n", index+1)
+	fmt.Fprintf(cmd.OutOrStdout(), "%s\n", i18n.T(i18n.OutputCompletedTodo, index+1))
 	return nil
 }

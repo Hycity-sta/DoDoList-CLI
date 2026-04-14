@@ -1,20 +1,39 @@
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"dodolist/config"
+	"dodolist/i18n"
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
 
 func Lang() *cobra.Command {
-	// 这里先保留语言命令的占位定义，后面再补实际逻辑。
 	command := &cobra.Command{
-		Use:   "lang [en|zh]",
-		Short: "Set or show language.",
+		Use:   i18n.T(i18n.CmdLangUse),
+		Short: i18n.T(i18n.CmdLangShort),
 		Args:  cobra.RangeArgs(0, 1),
 	}
 
-	// 这里把语言命令的执行入口挂上去。
-	command.Run = langHandle
+	command.RunE = langHandle
 	return command
 }
 
-func langHandle(cmd *cobra.Command, args []string) {
-	// 语言切换逻辑暂时还没接入，这里先留空占位。
+func langHandle(cmd *cobra.Command, args []string) error {
+	if len(args) == 0 {
+		_, err := fmt.Fprintf(cmd.OutOrStdout(), "%s\n", i18n.T(i18n.CmdLangCurrent, config.Language()))
+		return err
+	}
+
+	lang := args[0]
+	if !config.IsSupportedLanguage(lang) {
+		return fmt.Errorf(i18n.T(i18n.CmdLangUnknown, lang))
+	}
+
+	if err := config.SetLanguage(lang); err != nil {
+		return err
+	}
+	i18n.SetLang(config.Language())
+	_, err := fmt.Fprintf(cmd.OutOrStdout(), "%s\n", i18n.T(i18n.CmdLangSet, i18n.Lang()))
+	return err
 }

@@ -49,4 +49,5 @@ DoDoList
 - `storage` 负责待办数据的单文件持久化喵~
 - `utils` 放命令共用的小工具函数喵~
 - `config` 和 `i18n` 预留给语言配置与国际化能力喵~
+- `config.json` 用来保存当前界面语言配置喵~
 - `bin/data/todos.json` 是运行后生成的待办数据文件喵~

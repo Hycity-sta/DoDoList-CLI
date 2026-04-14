@@ -1,12 +1,16 @@
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"dodolist/i18n"
+
+	"github.com/spf13/cobra"
+)
 
 func Help() *cobra.Command {
 	// 这里定义帮助命令的基本信息。
 	command := &cobra.Command{
-		Use:   "help",
-		Short: "Show help information.",
+		Use:   i18n.T(i18n.CmdHelpUse),
+		Short: i18n.T(i18n.CmdHelpShort),
 		Args:  cobra.NoArgs,
 	}
 

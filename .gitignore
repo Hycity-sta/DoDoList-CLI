@@ -12,3 +12,4 @@ build/
 tmp/
 *.log
 data/
+test-output.md

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"dodolist/i18n"
 	"dodolist/utils"
 	"fmt"
 
@@ -10,8 +11,8 @@ import (
 func Delete() *cobra.Command {
 	// 这里定义删除命令的基本信息。
 	command := &cobra.Command{
-		Use:   "delete [index]",
-		Short: "Delete a todo item.",
+		Use:   i18n.T(i18n.CmdDeleteUse),
+		Short: i18n.T(i18n.CmdDeleteShort),
 		Args:  cobra.ExactArgs(1),
 	}
 
@@ -34,7 +35,7 @@ func deleteHandle(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	if index >= len(records) {
-		return fmt.Errorf("todo %d does not exist", index+1)
+		return fmt.Errorf(i18n.T(i18n.ErrTodoNotExist, index+1))
 	}
 
 	// 从切片里移除目标待办，再整体回写到文件。
@@ -45,6 +46,6 @@ func deleteHandle(cmd *cobra.Command, args []string) error {
 	}
 
 	// 最后把删除结果打印出来。
-	fmt.Fprintf(cmd.OutOrStdout(), "deleted todo %d\n", index+1)
+	fmt.Fprintf(cmd.OutOrStdout(), "%s\n", i18n.T(i18n.OutputDeletedTodo, index+1))
 	return nil
 }

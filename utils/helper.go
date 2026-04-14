@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"dodolist/i18n"
 	"dodolist/storage"
 	"fmt"
 	"strings"
@@ -16,9 +17,9 @@ type ViewItem struct {
 func FormatStatus(completed bool) string {
 	// 把布尔完成状态转换成更直观的文本。
 	if completed {
-		return "done"
+		return i18n.T(i18n.StatusDone)
 	}
-	return "todo"
+	return i18n.T(i18n.StatusTodo)
 }
 
 func JoinContent(args []string) string {
@@ -69,7 +70,7 @@ func FormatTime(t time.Time) string {
 func ValidatePriority(priority int) error {
 	// 当前项目约定优先级不能小于零。
 	if priority < 0 {
-		return fmt.Errorf("priority must be greater than or equal to 0")
+		return fmt.Errorf(i18n.T(i18n.ErrPriorityNonNegative))
 	}
 	return nil
 }

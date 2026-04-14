@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"dodolist/i18n"
 	"dodolist/storage"
 	"dodolist/utils"
 	"fmt"
@@ -14,13 +15,13 @@ func Todo() *cobra.Command {
 
 	// 这里定义创建待办命令的基本信息。
 	command := &cobra.Command{
-		Use:   "todo [content]",
-		Short: "Create a new todo item.",
+		Use:   i18n.T(i18n.CmdTodoUse),
+		Short: i18n.T(i18n.CmdTodoShort),
 		Args:  cobra.MinimumNArgs(1),
 	}
 
 	// 这里挂载命令所需的标记和执行入口。
-	command.Flags().IntVar(&priority, "pro", 0, "priority of the todo item")
+	command.Flags().IntVar(&priority, "pro", 0, i18n.T(i18n.CmdTodoPriority))
 	command.RunE = todoHandle(&priority)
 	return command
 }
@@ -50,7 +51,7 @@ func todoHandle(priority *int) func(cmd *cobra.Command, args []string) error {
 		}
 
 		// 最后把创建结果打印给终端用户。
-		fmt.Fprintf(cmd.OutOrStdout(), "created todo: %s\n", record.Content)
+		fmt.Fprintf(cmd.OutOrStdout(), "%s\n", i18n.T(i18n.OutputCreatedTodo, record.Content))
 		return nil
 	}
 }
