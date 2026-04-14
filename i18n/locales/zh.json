@@ -1,0 +1,6 @@
+{
+  "cmd.version.use": "version",
+  "cmd.version.short": "输出版本信息。",
+  "cmd.help.use": "help",
+  "cmd.help.short": "显示帮助信息。"
+}

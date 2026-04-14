@@ -1,0 +1,39 @@
+{
+  // 打开仓库根目录，方便在一个窗口里管理整个项目
+  "folders": [
+    {
+      "path": "../../DoDoList"
+    }
+  ],
+  // 这里放工作区级别的 VS Code 设置
+  "settings": {
+    // 统一换行符，减少跨平台换行差异
+    "files.eol": "\n",
+    // 保存时自动格式化
+    "editor.formatOnSave": true,
+    // Windows 下默认使用 PowerShell
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    // 隐藏常见的生成文件和依赖目录
+    "files.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true
+    },
+    // 搜索时也跳过这些目录，减少干扰
+    "search.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/build": true
+    }
+  },
+  // 推荐安装的扩展，打开工作区时 VS Code 会提示
+  "extensions": {
+    "recommendations": [
+      "golang.Go"
+    ]
+  }
+}

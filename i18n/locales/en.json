@@ -1,0 +1,6 @@
+{
+  "cmd.version.use": "version",
+  "cmd.version.short": "Print version information.",
+  "cmd.help.use": "help",
+  "cmd.help.short": "Show help information."
+}
