@@ -21,6 +21,7 @@ func main() {
 	root.AddCommand(cmd.Lang())
 	root.AddCommand(cmd.Todo())
 	root.AddCommand(cmd.List())
+	root.AddCommand(cmd.Ok())
 	root.AddCommand(cmd.Delete())
 	root.AddCommand(cmd.Edit())
 
