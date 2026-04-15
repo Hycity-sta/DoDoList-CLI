@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"os"
@@ -57,12 +58,23 @@ func (s *Store) List() ([]Record, error) {
 		return []Record{}, nil
 	}
 
-	var records []Record
-
-	// 整个文件就是一个 JSON 数组，直接反序列化即可。
-	if err := json.Unmarshal(data, &records); err != nil {
+	// 整个文件就是一个 JSON 数组，逐项严格反序列化，拒绝旧字段残留。
+	var rawRecords []json.RawMessage
+	if err := json.Unmarshal(data, &rawRecords); err != nil {
 		return nil, err
 	}
+
+	records := make([]Record, 0, len(rawRecords))
+	for _, raw := range rawRecords {
+		var record Record
+		decoder := json.NewDecoder(bytes.NewReader(raw))
+		decoder.DisallowUnknownFields()
+		if err := decoder.Decode(&record); err != nil {
+			return nil, err
+		}
+		records = append(records, record)
+	}
+
 	return records, nil
 }
 

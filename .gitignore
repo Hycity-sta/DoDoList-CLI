@@ -13,3 +13,5 @@ tmp/
 *.log
 data/
 test-output.md
+
+test/env/

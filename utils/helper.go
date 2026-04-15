@@ -3,7 +3,6 @@ package utils
 import (
 	"dodolist/i18n"
 	"dodolist/storage"
-	"fmt"
 	"strings"
 	"time"
 	"unicode"
@@ -20,7 +19,7 @@ func FormatStatus(completed bool) string {
 	if completed {
 		return i18n.T(i18n.StatusDone)
 	}
-	return i18n.T(i18n.StatusTodo)
+	return ""
 }
 
 func JoinContent(args []string) string {
@@ -66,14 +65,6 @@ func FormatTime(t time.Time) string {
 
 	// 正常时间统一格式化成固定的本地时间字符串。
 	return t.Local().Format("2006-01-02 15:04:05")
-}
-
-func ValidatePriority(priority int) error {
-	// 当前项目约定优先级不能小于零。
-	if priority < 0 {
-		return fmt.Errorf(i18n.T(i18n.ErrPriorityNonNegative))
-	}
-	return nil
 }
 
 func DisplayWidth(text string) int {

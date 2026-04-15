@@ -9,8 +9,9 @@ import (
 
 const version = "1.0"
 
+// 用于查看版本信息
 func Version() *cobra.Command {
-	// 这里只负责组装版本命令本身。
+	// 这里只负责组装版本命令本身
 	command := &cobra.Command{
 		Use:   i18n.T(i18n.CmdVersionUse),
 		Short: i18n.T(i18n.CmdVersionShort),
@@ -20,6 +21,6 @@ func Version() *cobra.Command {
 }
 
 func versionHandle(cmd *cobra.Command, args []string) {
-	// 版本命令只输出当前程序版本。
+	// 版本命令只输出当前程序版本
 	fmt.Fprintf(cmd.OutOrStdout(), "%s\n", i18n.T(i18n.OutputVersion, version))
 }
