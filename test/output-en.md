@@ -43,8 +43,8 @@ created todo: Write report
 ```text
 INDEX  CREATED AT           STATUS  TODO        
 -----  -------------------  ------  ------------
-1      2026-04-15 09:36:36  todo    Buy milk    
-2      2026-04-15 09:36:37  todo    Write report
+1      2026-04-15 10:11:52          Buy milk    
+2      2026-04-15 10:11:53          Write report
 ```
 
 ## 5. 完成第 1 项待办
@@ -62,8 +62,8 @@ completed todo 1
 ```text
 INDEX  CREATED AT           STATUS  TODO        
 -----  -------------------  ------  ------------
-1      2026-04-15 09:36:36  done    Buy milk    
-2      2026-04-15 09:36:37  todo    Write report
+1      2026-04-15 10:11:52  done    Buy milk    
+2      2026-04-15 10:11:53          Write report
 ```
 
 ## 7. 删除第 2 项待办
@@ -81,7 +81,7 @@ deleted todo 2
 ```text
 INDEX  CREATED AT           STATUS  TODO    
 -----  -------------------  ------  --------
-1      2026-04-15 09:36:36  done    Buy milk
+1      2026-04-15 10:11:52  done    Buy milk
 ```
 
 ## 9. 创建第三个待办
@@ -107,7 +107,7 @@ cleared 1 completed todo items
 ```text
 INDEX  CREATED AT           STATUS  TODO     
 -----  -------------------  ------  ---------
-1      2026-04-15 09:36:37  todo    Read book
+1      2026-04-15 10:11:54          Read book
 ```
 
 ## 12. 查看当前语言
@@ -138,10 +138,8 @@ Examples:
 
 Available Commands:
   clear       Clear all completed todo items.
-  completion  Generate the autocompletion script for the specified shell
   delete      Delete a todo item.
   help        Show help information.
-  help        Help about any command
   lang        Set or show language.
   ok          Mark a todo item as completed.
   version     Print version information.
